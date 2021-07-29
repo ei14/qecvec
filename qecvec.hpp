@@ -1,5 +1,7 @@
 // Copyright (c) 2021 Thomas Kaldahl
 
+#include <math.h>
+
 #ifndef QECVEC_HPP
 #define QECVEC_HPP
 
@@ -15,7 +17,7 @@ struct Vec2f {
 	static Vec2f down(); // (0, -1)
 	static Vec2f left(); // (-1, 0)
 	static Vec2f right(); // (1, 0)
-	static Vec2f randomUniform(double min, double max);
+	static Vec2f randomUniform(float min, float max);
 
 	// Constructors
 	Vec2f(); // (0, 0)
@@ -31,18 +33,18 @@ struct Vec2f {
 	Vec2f normal() const; // Unit vector
 
 	// Binary operations
-	Vec2f operator*(double scalar) const;
-	Vec2f operator/(double divisor) const;
-	double operator^(double exponent) const; // Magnitude raised to power
+	Vec2f operator*(float scalar) const;
+	Vec2f operator/(float divisor) const;
+	float operator^(float exponent) const; // Magnitude raised to power
 
 	Vec2f operator+(Vec2f addend) const; // Throws error if dimensions mis-match
 	Vec2f operator-(Vec2f subtrahend) const; // ''
 	Vec2f operator&(Vec2f multiplier) const; // Hadamard product
-	double operator*(Vec2f multiplier) const; // Dot product
+	float operator*(Vec2f multiplier) const; // Dot product
 
 	// In-place operations
-	Vec2f operator*=(double scalar);
-	Vec2f operator/=(double divisor);
+	Vec2f operator*=(float scalar);
+	Vec2f operator/=(float divisor);
 	Vec2f operator+=(Vec2f addend);
 	Vec2f operator-=(Vec2f subtrahend);
 	Vec2f operator&=(Vec2f multiplier); // Hadamard product
@@ -52,7 +54,7 @@ struct Vec2f {
 	// Technical methods
 	Vec2f copy() const;
 };
-Vec2f operator*(double scalar, Vec2f vector);
+Vec2f operator*(float scalar, Vec2f vector);
 
 // 3D vector with float components
 struct Vec3f {
@@ -68,7 +70,7 @@ struct Vec3f {
 	static Vec3f right(); // (1, 0, 0)
 	static Vec3f forward(); // (0, 0, 1); out of the screen
 	static Vec3f backward(); // (0, 0, -1); into the screen
-	static Vec3f randomUniform(double min, double max);
+	static Vec3f randomUniform(float min, float max);
 
 	// Constructors
 	Vec3f(); // (0, 0, 0)
@@ -91,18 +93,18 @@ struct Vec3f {
 	Vec3f normal() const; // Unit vector
 
 	// Binary operations
-	Vec3f operator*(double scalar) const;
-	Vec3f operator/(double divisor) const;
-	double operator^(double exponent) const; // Magnitude raised to power
+	Vec3f operator*(float scalar) const;
+	Vec3f operator/(float divisor) const;
+	float operator^(float exponent) const; // Magnitude raised to power
 
 	Vec3f operator+(Vec3f addend) const; // Throws error if dimensions mis-match
 	Vec3f operator-(Vec3f subtrahend) const; // ''
 	Vec3f operator&(Vec3f multiplier) const; // Hadamard product
-	double operator*(Vec3f multiplier) const; // Dot product
+	float operator*(Vec3f multiplier) const; // Dot product
 
 	// In-place operations
-	Vec3f operator*=(double scalar);
-	Vec3f operator/=(double divisor);
+	Vec3f operator*=(float scalar);
+	Vec3f operator/=(float divisor);
 	Vec3f operator+=(Vec3f addend);
 	Vec3f operator-=(Vec3f subtrahend);
 	Vec3f operator&=(Vec3f multiplier); // Hadamard product
@@ -112,7 +114,7 @@ struct Vec3f {
 	// Technical methods
 	Vec3f copy() const;
 };
-Vec3f operator*(double scalar, Vec3f vector);
+Vec3f operator*(float scalar, Vec3f vector);
 
 // 4D vector with float components
 struct Vec4f {
@@ -123,7 +125,7 @@ struct Vec4f {
 
 	// Statics
 	static Vec4f zero();
-	static Vec4f randomUniform(double min, double max);
+	static Vec4f randomUniform(float min, float max);
 
 	// Constructors
 	Vec4f(); // (0, 0, 0, 0)
@@ -157,18 +159,18 @@ struct Vec4f {
 	Vec4f normal() const; // Unit vector
 
 	// Binary operations
-	Vec4f operator*(double scalar) const;
-	Vec4f operator/(double divisor) const;
-	double operator^(double exponent) const; // Magnitude raised to power
+	Vec4f operator*(float scalar) const;
+	Vec4f operator/(float divisor) const;
+	float operator^(float exponent) const; // Magnitude raised to power
 
 	Vec4f operator+(Vec4f addend) const; // Throws error if dimensions mis-match
 	Vec4f operator-(Vec4f subtrahend) const; // ''
 	Vec4f operator&(Vec4f multiplier) const; // Hadamard product
-	double operator*(Vec4f multiplier) const; // Dot product
+	float operator*(Vec4f multiplier) const; // Dot product
 
 	// In-place operations
-	Vec4f operator*=(double scalar);
-	Vec4f operator/=(double divisor);
+	Vec4f operator*=(float scalar);
+	Vec4f operator/=(float divisor);
 	Vec4f operator+=(Vec4f addend);
 	Vec4f operator-=(Vec4f subtrahend);
 	Vec4f operator&=(Vec4f multiplier); // Hadamard product
@@ -178,7 +180,7 @@ struct Vec4f {
 	// Technical methods
 	Vec4f copy() const;
 };
-Vec4f operator*(double scalar, Vec4f vector);
+Vec4f operator*(float scalar, Vec4f vector);
 
 // 2x2 matrix with float components
 struct Mat2f {
@@ -187,7 +189,7 @@ struct Mat2f {
 	// Statics
 	static Mat2f zero(); // Zero matrix
 	static Mat2f identity(); // Identity matrix
-	static Mat2f randomUniform(int height, int width, double min, double max);
+	static Mat2f randomUniform(int height, int width, float min, float max);
 	static Mat2f fromRowVecs(Vec2f row1, Vec2f row2);
 	static Mat2f fromColVecs(Vec2f col1, Vec2f col2);
 
@@ -251,7 +253,7 @@ struct Mat3f {
 	// Statics
 	static Mat3f zero(); // Zero matrix
 	static Mat3f identity(); // Identity matrix
-	static Mat3f randomUniform(int height, int width, double min, double max);
+	static Mat3f randomUniform(int height, int width, float min, float max);
 	static Mat3f fromRowVecs(Vec3f row1, Vec3f row2, Vec3f row3);
 	static Mat3f fromColVecs(Vec3f col1, Vec3f col2, Vec3f col3);
 
@@ -319,7 +321,7 @@ struct Mat4f {
 	// Statics
 	static Mat4f zero(); // Zero matrix
 	static Mat4f identity(); // Identity matrix
-	static Mat4f randomUniform(int height, int width, double min, double max);
+	static Mat4f randomUniform(int height, int width, float min, float max);
 	static Mat4f fromRowVecs(Vec4f row1, Vec4f row2, Vec4f row3, Vec4f row4);
 	static Mat4f fromColVecs(Vec4f col1, Vec4f col2, Vec4f col3, Vec4f col4);
 
