@@ -1,3 +1,5 @@
+// Copyright (c) 2021 Thomas Kaldahl
+
 #ifndef QECVEC_HPP
 #define QECVEC_HPP
 
