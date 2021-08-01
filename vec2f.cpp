@@ -41,6 +41,8 @@ char *Vec2f::string() const {
 	return res;
 }
 
+
+
 // Technical methods
 Vec2f Vec2f::copy() const {
 	return Vec2f(x, y);

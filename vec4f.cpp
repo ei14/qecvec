@@ -60,6 +60,18 @@ char *Vec4f::string() const {
 	return res;
 }
 
+Vec2f Vec4f::xy() const {return Vec2f(x, y);}
+Vec2f Vec4f::xz() const {return Vec2f(x, z);}
+Vec2f Vec4f::xw() const {return Vec2f(x, w);} //!vec3f.cpp
+Vec2f Vec4f::yz() const {return Vec2f(y, z);}
+Vec2f Vec4f::yw() const {return Vec2f(y, w);} //!vec3f.cpp
+Vec2f Vec4f::zw() const {return Vec2f(z, w);} //!vec3f.cpp
+
+Vec3f Vec4f::xyz() const {return Vec3f(x, y, z);}
+Vec3f Vec4f::xyw() const {return Vec3f(x, y, w);}
+Vec3f Vec4f::xzw() const {return Vec3f(x, z, w);}
+Vec3f Vec4f::yzw() const {return Vec3f(y, z, w);}
+
 // Technical methods
 Vec4f Vec4f::copy() const {
 	return Vec4f(x, y, z, w);

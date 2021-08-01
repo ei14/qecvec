@@ -12,24 +12,28 @@ for i, line in enumerate(vec4f_lines):
 
     # Exclude lines with Vec3f
     if not search('Vec3f', line) or search('^//', line):
-        # Rename constructors and calls
-        line = sub('Vec4f', 'Vec3f', line)
 
-        # Replace x,x,x,x with x,x,x
-        line = sub(r'(.*), \1, \1, \1', r'\1, \1, \1', line)
+        # Exclude lines that are explicitly excluded
+        if not search('//!vec3f.cpp', line):
 
-        # Replace x y z w with x y z
-        line = sub(r'(x(.*)y\2z)\2w', r'\1', line)
+            # Rename constructors and calls
+            line = sub('Vec4f', 'Vec3f', line)
 
-        # Replace xx yy zz ww with xx yy zz
-        line = sub(r'(x(.*)x([\S\s]*)y\2y\3z\2z)\3w\2w', r'\1', line)
+            # Replace x,x,x,x with x,x,x
+            line = sub(r'(.*), \1, \1, \1', r'\1, \1, \1', line)
 
-        # Include lines that are explicitly meant for this file
-        line = sub(r'//vec3f\.cpp: (.*)', r'\1', line)
+            # Replace x y z w with x y z
+            line = sub(r'(x(.*)y\2z)\2w', r'\1', line)
 
-        # Exclude lines with Vec3f(x, x, x, x)
-        if not search(r'Vec3f\([^,)]*,[^,)]*,[^,)]*,[^,)]*\)', line):
-            vec3f_lines.append(line)
+            # Replace xx yy zz ww with xx yy zz
+            line = sub(r'(x(.*)x([\S\s]*)y\2y\3z\2z)\3w\2w', r'\1', line)
+
+            # Include lines that are explicitly meant for this file
+            line = sub(r'//vec3f\.cpp: (.*)', r'\1', line)
+
+            # Exclude lines with Vec3f(x, x, x, x)
+            if not search(r'Vec3f\([^,)]*,[^,)]*,[^,)]*,[^,)]*\)', line):
+                vec3f_lines.append(line)
 
 vec3f_text = ''.join(vec3f_lines)
 
@@ -53,24 +57,28 @@ for i, line in enumerate(vec3f_lines):
 
     # Exclude lines with Vec2f
     if not search('Vec2f', line) or search('^//', line):
-        # Rename constructors and calls
-        line = sub('Vec3f', 'Vec2f', line)
 
-        # Replace x,x,x with x,x
-        line = sub(r'(.*), \1, \1', r'\1, \1', line)
+        # Exclude lines that are explicitly excluded
+        if not search('//!vec2f.cpp', line):
 
-        # Replace x y z with x y
-        line = sub(r'(x(.*)y)\2z', r'\1', line)
+            # Rename constructors and calls
+            line = sub('Vec3f', 'Vec2f', line)
 
-        # Replace xx yy zz with xx yy
-        line = sub(r'(x(.*)x([\S\s]*)y\2y)\3z\2z', r'\1', line)
+            # Replace x,x,x with x,x
+            line = sub(r'(.*), \1, \1', r'\1, \1', line)
 
-        # Include lines that are explicitly meant for this file
-        line = sub(r'//vec2f\.cpp: (.*)', r'\1', line)
+            # Replace x y z with x y
+            line = sub(r'(x(.*)y)\2z', r'\1', line)
 
-        # Exclude lines with Vec2f(x, x, x)
-        if not search(r'Vec2f\([^,)]*,[^,)]*,[^,)]*\)', line):
-            vec2f_lines.append(line)
+            # Replace xx yy zz with xx yy
+            line = sub(r'(x(.*)x([\S\s]*)y\2y)\3z\2z', r'\1', line)
+
+            # Include lines that are explicitly meant for this file
+            line = sub(r'//vec2f\.cpp: (.*)', r'\1', line)
+
+            # Exclude lines with Vec2f(x, x, x)
+            if not search(r'Vec2f\([^,)]*,[^,)]*,[^,)]*\)', line):
+                vec2f_lines.append(line)
 
 vec2f_text = '\n'.join(vec2f_lines)
 

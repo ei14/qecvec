@@ -52,6 +52,11 @@ char *Vec3f::string() const {
 	return res;
 }
 
+Vec2f Vec3f::xy() const {return Vec2f(x, y);}
+Vec2f Vec3f::xz() const {return Vec2f(x, z);}
+Vec2f Vec3f::yz() const {return Vec2f(y, z);}
+
+
 // Technical methods
 Vec3f Vec3f::copy() const {
 	return Vec3f(x, y, z);
