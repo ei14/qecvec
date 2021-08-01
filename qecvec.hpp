@@ -1,6 +1,8 @@
 // Copyright (c) 2021 Thomas Kaldahl
 
 #include <math.h>
+#include <stdio.h>
+#include <string.h>
 
 #ifndef QECVEC_HPP
 #define QECVEC_HPP
@@ -184,7 +186,8 @@ Vec4f operator*(float scalar, Vec4f vector);
 
 // 2x2 matrix with float components
 struct Mat2f {
-	float data[4]; // Components, row by row
+	float a, b;
+	float c, d;
 
 	// Statics
 	static Mat2f zero(); // Zero matrix
@@ -196,11 +199,12 @@ struct Mat2f {
 	// Constructors
 	Mat2f(); // Identity matrix
 	Mat2f(float scalar); // Scalar multiple of identity matrix
-	Mat2f(float data[4]);
-	Mat2f(float r1c1, float r1c2, float r2c1, float r2c2);
+	Mat2f(
+		float a, float b,
+		float c, float d
+	);
 
 	// Accessors
-	float comp(int r, int c) const; // Component
 	char *string() const; // As a string
 
 	// Unary operations
@@ -214,17 +218,19 @@ struct Mat2f {
 	Mat2f inv() const; // Inverse. Throws error if not invertible.
 
 	// Misc operations
-	Vec2f rowVec(int row) const;
-	Vec2f colVec(int col) const;
+	Vec2f leftCol() const;
+	Vec2f rightCol() const;
+	Vec2f topRow() const;
+	Vec2f bottomRow() const;
 
 	// Binary operations
 	Mat2f operator*(float scalar) const;
 	Mat2f operator/(float divisor) const;
 	Mat2f operator^(int exponent) const; // Exponentiation
 
-	Vec2f operator*(Vec2f multiplier); // Throws error if dimensions mis-match
+	Vec2f operator*(Vec2f multiplier) const;
 
-	Mat2f operator*(Mat2f multiplier) const; // ''
+	Mat2f operator*(Mat2f multiplier) const;
 	Mat2f operator&(Mat2f multiplier) const; // Hadamard product
 	Mat2f operator+(Mat2f addend) const;
 	Mat2f operator-(Mat2f subtrahend) const;
@@ -232,7 +238,6 @@ struct Mat2f {
 	// In-place operations
 	Mat2f operator*=(float scalar);
 	Mat2f operator/=(float divisor);
-	Mat2f operator^=(int exponent); // Exponentiation
 
 	Mat2f operator&=(Mat2f multiplier); // Hadamard product
 	Mat2f operator+=(Mat2f addend);
@@ -248,7 +253,9 @@ Mat2f operator*(float scalar, Mat2f matrix);
 
 // 3x3 matrix with float components
 struct Mat3f {
-	float data[9]; // Components, row by row
+	float a, b, e;
+	float c, d, f;
+	float g, h, i;
 
 	// Statics
 	static Mat3f zero(); // Zero matrix
@@ -260,15 +267,13 @@ struct Mat3f {
 	// Constructors
 	Mat3f(); // Identity matrix
 	Mat3f(float scalar); // Scalar multiple of identity matrix
-	Mat3f(float data[9]);
 	Mat3f(
-		float r1c1, float r1c2, float r1c3,
-		float r2c1, float r2c2, float r2c3,
-		float r3c1, float r3c2, float r3c3
+		float a, float b, float e,
+		float c, float d, float f,
+		float g, float h, float i
 	);
 
 	// Accessors
-	float comp(int r, int c) const; // Component
 	char *string() const; // As a string
 
 	// Unary operations
@@ -290,7 +295,7 @@ struct Mat3f {
 	Mat3f operator/(float divisor) const;
 	Mat3f operator^(int exponent) const; // Exponentiation
 
-	Vec3f operator*(Vec3f multiplier); // Throws error if dimensions mis-match
+	Vec3f operator*(Vec3f multiplier) const; // Throws error if dimensions mis-match
 
 	Mat3f operator*(Mat3f multiplier) const; // ''
 	Mat3f operator&(Mat3f multiplier) const; // Hadamard product
@@ -300,15 +305,11 @@ struct Mat3f {
 	// In-place operations
 	Mat3f operator*=(float scalar);
 	Mat3f operator/=(float divisor);
-	Mat3f operator^=(int exponent); // Exponentiation
 
 	Mat3f operator&=(Mat3f multiplier); // Hadamard product
 	Mat3f operator+=(Mat3f addend);
 	Mat3f operator-=(Mat3f subtrahend);
 
-	// Mutators
-	float setComp(int r, int c, float value);	// Sets component.
-												// Returns previous value.
 	// Technical methods
 	Mat3f copy() const;
 };
@@ -316,7 +317,10 @@ Mat3f operator*(float scalar, Mat3f matrix);
 
 // 4x4 matrix with float components
 struct Mat4f {
-	float data[16]; // Components, row by row
+	float a, b, e, j;
+	float c, d, f, k;
+	float g, h, i, l;
+	float m, n, o, p;
 
 	// Statics
 	static Mat4f zero(); // Zero matrix
@@ -328,16 +332,14 @@ struct Mat4f {
 	// Constructors
 	Mat4f(); // Identity matrix
 	Mat4f(float scalar); // Scalar multiple of identity matrix
-	Mat4f(float data[16]);
 	Mat4f(
-		float r1c1, float r1c2, float r1c3, float r1c4,
-		float r2c1, float r2c2, float r2c3, float r2c4,
-		float r3c1, float r3c2, float r3c3, float r3c4,
-		float r4c1, float r4c2, float r4c3, float r4c4
+		float a, float b, float e, float j,
+		float c, float d, float f, float k,
+		float g, float h, float i, float l,
+		float m, float n, float o, float p
 	);
 
 	// Accessors
-	float comp(int r, int c) const; // Component
 	char *string() const; // As a string
 
 	// Unary operations
@@ -359,7 +361,7 @@ struct Mat4f {
 	Mat4f operator/(float divisor) const;
 	Mat4f operator^(int exponent) const; // Exponentiation
 
-	Vec4f operator*(Vec4f multiplier); // Throws error if dimensions mis-match
+	Vec4f operator*(Vec4f multiplier) const; // Throws error if dimensions mis-match
 
 	Mat4f operator*(Mat4f multiplier) const; // ''
 	Mat4f operator&(Mat4f multiplier) const; // Hadamard product
@@ -369,15 +371,11 @@ struct Mat4f {
 	// In-place operations
 	Mat4f operator*=(float scalar);
 	Mat4f operator/=(float divisor);
-	Mat4f operator^=(int exponent); // Exponentiation
 
 	Mat4f operator&=(Mat4f multiplier); // Hadamard product
 	Mat4f operator+=(Mat4f addend);
 	Mat4f operator-=(Mat4f subtrahend);
 
-	// Mutators
-	float setComp(int r, int c, float value);	// Sets component.
-												// Returns previous value.
 	// Technical methods
 	Mat4f copy() const;
 };
